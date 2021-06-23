@@ -1,0 +1,54 @@
+:root{
+    --s_grey: #212529;
+    --s_purple: #bb0eb8;
+    --s_red: #DB2B39;
+    --s_orange: #F3A712;
+    --s_snow: #FCF7F8;
+    --f_bad: #df0e1f;
+    --f_good: #00FF00;
+    --f_normal: #000;
+}
+
+body{
+    color: var(--s_snow);
+    background: var(--s_snow);
+}
+
+.container{
+    background: white;
+    color: black;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.logo_size{
+    width: 130px;
+}
+
+.text_purple{
+    color: var(--s_purple) !important;
+}
+
+.bg-orange{
+    background: var(--s_orange) !important;
+}
+
+.test{
+    height: 150px;
+}
+
+.good-part{
+    color: var(--f_good);
+}
+
+.bad-part{
+    color: var(--f_bad);
+}
+
+.current-word{
+    text-decoration: underline;
+}
+
+.normal-part{
+    color: var(--f_normal);
+}

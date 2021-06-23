@@ -1,0 +1,33 @@
+:root{
+    --s_grey: #212529;
+    --s_purple: #bb0eb8;
+    --s_red: #DB2B39;
+    --s_orange: #F3A712;
+    --s_snow: #FCF7F8;
+}
+
+body{
+    color: var(--s_snow);
+    background: var(--s_snow);
+}
+
+.container{
+    background: white;
+    color: black;
+}
+
+.logo_size{
+    width: 130px;
+}
+
+.text_purple{
+    color: var(--s_purple) !important;
+}
+
+.bg-orange{
+    background: var(--s_orange) !important;
+}
+
+.test{
+    height: 150px;
+}
