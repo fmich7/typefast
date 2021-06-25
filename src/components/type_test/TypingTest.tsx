@@ -5,6 +5,12 @@ import Timer from './Timer'
 import Progress_bar from './ProgressBar'
 import {textChangeRangeIsUnchanged} from 'typescript';
 
+interface wordInParts {
+    word_good: string;
+    word_bad: string;
+    word_normal: string;
+}
+
 type InputState = {
     good_part: string,
     allWords: string[],
@@ -14,29 +20,32 @@ type InputState = {
     mistakes: number,
     accuracy: number,
     previousUserWord: string,
-    charEntries: number
+    charEntries: number,
+    currentWordInParts: wordInParts
 };
 
 export default class TypeTestInput extends Component<{}, InputState>{
 
     constructor() {
         super({});
+        let text = getRandomTextFromApi().split(" ");
         this.state = {
             good_part: "",
-            allWords: getRandomTextFromApi().split(" "),
+            allWords: text,
             currentWordIndex: 0,
             userWord: "",
             finished: false,
             mistakes: 0,
             accuracy: 100,
             previousUserWord: "",
-            charEntries: 0
+            charEntries: 0,
+            currentWordInParts: {word_good: "", word_bad: "", word_normal: text[0]}
         };
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(event: any) {
-        if (this.state.currentWordIndex === this.state.allWords.length)
+        if (this.state.currentWordIndex >= this.state.allWords.length)
             return;
         //sprawdza czy jest nowy znak, czy jest usuwanie poprzednihc
         let newCharTyped = false;
@@ -49,7 +58,7 @@ export default class TypeTestInput extends Component<{}, InputState>{
             this.state.good_part, newCharTyped);
 
         //liczy accuracy
-        const mistakes = response.mistake + this.state.mistakes;
+        const mistakes = (response.mistake ? 1 : 0) + this.state.mistakes;
         const accuracy = Number(Math.round((this.state.charEntries - mistakes) / this.state.charEntries * 100).toFixed(0));
 
         this.setState({
@@ -60,7 +69,8 @@ export default class TypeTestInput extends Component<{}, InputState>{
             finished: response.finished,
             mistakes: mistakes,
             accuracy: accuracy,
-            previousUserWord: event.target.value
+            previousUserWord: event.target.value,
+            currentWordInParts: response.currentWordInParts
         });
     }
 
@@ -73,7 +83,10 @@ export default class TypeTestInput extends Component<{}, InputState>{
                     </span>
                 &nbsp; {/* one char space */}
                     <span className="lead current-word">
-                        {this.state.allWords[this.state.currentWordIndex]}
+                        {/*this.state.allWords[this.state.currentWordIndex]*/}
+                        <span className="good-part">{this.state.currentWordInParts.word_good}</span>
+                        <span className="bad-part">{this.state.currentWordInParts.word_bad}</span>
+                        <span className="normal-part">{this.state.currentWordInParts.word_normal}</span>
                     </span>
                 &nbsp; {/* one char space */}
                     <span className="lead normal-part">{this.state.allWords.slice(this.state.currentWordIndex + 1).join(" ")}</span>
