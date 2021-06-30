@@ -10,8 +10,8 @@ export default function FrontPage() {
                             <div className="text-white">
                                 <h2>See how fast you can type</h2>
                                 <p>Test yourself on how fast and how accurately you are able to type.</p>
-                                <button type="button" className="btn btn-dark">Sign Up</button>
-                                <button type="button" className="btn btn-outline-light">Try it</button>
+                                <a type="button" href="/sign_up" className="btn btn-dark">Sign Up</a>
+                                <a type="button" href="/test" className="btn btn-outline-light">Try it</a>
                             </div>
                         </div>
                         <div className="col-sm my-auto">
