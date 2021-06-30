@@ -1,24 +1,66 @@
 :root{
-    --s_grey: #212529;
+    --s_grey: #718989;
     --s_purple: #bb0eb8;
     --s_red: #DB2B39;
     --s_orange: #F3A712;
-    --s_snow: #FCF7F8;
+    --s_snow: #fff;
+    --s_darkgrey: #1c1d1f;
+    --s_seagreen: #4dbd90;
     --f_bad: #df0e1f;
     --f_good: #00FF00;
     --f_normal: #000;
 }
-
-body{
-    color: var(--s_snow);
-    background: var(--s_snow);
+#root, html, body {
+    height: 100%;
 }
 
+body{
+    color: black;
+    background: var(--s_snow);
+}
+.App{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+#wrapper{
+    flex: 1 0 auto;
+}
 .container{
     background: white;
     color: black;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+#front-banner{
+    width: 100%;
+    height: 400px;
+    background-image: url(images/E4vElmzWQAMvLiI.jpeg);
+    background-size: cover;
+    text-align: start;
+}
+
+.test_statistics{
+    margin-top: 15px;
+    padding: 10px 0 10px 0;
+    background: #bfa58e;
+    border: 3px solid #846c56;
+}
+.site-statistics{
+    text-align: start !important;
+}
+.navbar{
+    border-bottom: 2px solid var(--s_darkgrey);
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0,0,0, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+.footer{
+    flex-shrink: 0;
+    width: 100%;
 }
 
 .logo_size{
@@ -28,9 +70,23 @@ body{
 .text_purple{
     color: var(--s_purple) !important;
 }
+.text-grey{
+    color: var(--s_grey) !important;
+}
+.text_black{
+    color: black !important;
+}
 
 .bg-orange{
     background: var(--s_orange) !important;
+}
+
+.bg-darkgrey{
+    background: var(--s_darkgrey) !important;
+}
+
+.bg-seagreen{
+    background: var(--s_seagreen) !important;
 }
 
 .test{

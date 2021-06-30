@@ -76,37 +76,38 @@ export default class TypeTestInput extends Component<{}, InputState>{
 
     render() {
         return (
-            <div className="col-12 bg-orange">
-                <div className="jumbotron">
-                    <span className="lead good-part">
-                        {this.state.good_part}
-                    </span>
-                &nbsp; {/* one char space */}
-                    <span className="lead current-word">
-                        {/*this.state.allWords[this.state.currentWordIndex]*/}
-                        <span className="good-part">{this.state.currentWordInParts.word_good}</span>
-                        <span className="bad-part">{this.state.currentWordInParts.word_bad}</span>
-                        <span className="normal-part">{this.state.currentWordInParts.word_normal}</span>
-                    </span>
-                &nbsp; {/* one char space */}
-                    <span className="lead normal-part">{this.state.allWords.slice(this.state.currentWordIndex + 1).join(" ")}</span>
-                </div>
-                <div className="input-group input-group-lg pb-2">
-                    <input onChange={this.handleChange} value={this.state.userWord} type="text" className="form-control" placeholder="Type text here..." aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" />
-                </div>
-                <div className="text_progress">
+            <div className="container">
+                <div className="test_main">
+                    <div className="jumbotron text-start">
+                        <span className="lead good-part">
+                            {this.state.good_part}
+                        </span>
+                    &nbsp; {/* one char space */}
+                        <span className="lead current-word">
+                            {/*this.state.allWords[this.state.currentWordIndex]*/}
+                            <span className="good-part">{this.state.currentWordInParts.word_good}</span>
+                            <span className="bad-part">{this.state.currentWordInParts.word_bad}</span>
+                            <span className="normal-part">{this.state.currentWordInParts.word_normal}</span>
+                        </span>
+                    &nbsp; {/* one char space */}
+                        <span className="lead normal-part">{this.state.allWords.slice(this.state.currentWordIndex + 1).join(" ")}</span>
+                    </div>
+                    <div className="input-group input-group-lg pb-2">
+                        <input onChange={this.handleChange} value={this.state.userWord} type="text" className="form-control" placeholder="Type text here..." aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" />
+                    </div>
                     <Progress_bar progression={this.state.currentWordIndex / this.state.allWords.length} />
-                    <div>
-                        <div className="row">
-                            <div className="col-3">WPM: <WordsPerMinute autoStart={true} charEntries={this.state.charEntries} stop={this.state.finished} /></div>
-                            <div className="col-3">Duration: <StopWatch autoStart={true} stop={this.state.finished} /></div>
-                            <div className="col-3">Accuracy: {this.state.accuracy}%</div>
-                            <div className="col-3">Mistakes: {this.state.mistakes}</div>
-                        </div>
-                        <div className="row">
-                            <div className="col-6">Text words: {this.state.allWords.length} </div>
-                            <div className="col-6">Author: Kizo </div>
-                        </div>
+                </div>
+                {/* 2nd part */}
+                <div className="test_statistics">
+                    <div className="row">
+                        <div className="col-4">WPM: <WordsPerMinute autoStart={true} charEntries={this.state.charEntries} stop={this.state.finished} /></div>
+                        <div className="col-4">Accuracy: {this.state.accuracy}%</div>
+                        <div className="col-4">Mistakes: {this.state.mistakes}</div>
+                    </div>
+                    <div className="row">
+                        <div className="col-4">Duration: <StopWatch autoStart={true} stop={this.state.finished} /></div>
+                        <div className="col-4">Text words: {this.state.allWords.length} </div>
+                        <div className="col-4">Author: Kizo </div>
                     </div>
                 </div>
             </div>

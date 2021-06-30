@@ -1,13 +1,12 @@
 import React from 'react';
 
-function Footer(){
-    return(
-        <footer className="text-center text-lg-start bg-orange">
-            <div className="text-center p-4" style={{backgroundColor: 'rgba(0, 0, 0, 0.05)'}}>
-            © 2021 Copyright:
-            <a className="text-reset fw-bold" href="https://github.com/rekjef">
-                Type<span className="text_purple">Fast</span>
-            </a>
+function Footer() {
+    return (
+        <footer className="footer text-center text-lg-start bg-darkgrey text-grey">
+            <div className="text-center p-4">
+                <a className="text-decoration-none fw-bold text-grey" href="https://github.com/rekjef">
+                    © 2021 Copyright: TypeFast
+                </a>
             </div>
         </footer>
     );
