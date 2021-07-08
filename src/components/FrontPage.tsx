@@ -1,6 +1,36 @@
 import React, {useState, useEffect} from 'react';
-import banner from '../images/preview.png'
+import axios from 'axios';
+import banner from '../images/fingers_placement.webp';
+//https://preview.redd.it/0fraswgtys651.png?width=1920&format=png&auto=webp&s=4b14f247e564150a430c63e4e4621b80c25b3dda
+
+type getWebsiteStatisticsFromApiResponse = {
+    registered_users: number,
+    texts: number,
+    chars_sum: number,
+};
+
+export async function getWebsiteStatisticsFromApi(): Promise<getWebsiteStatisticsFromApiResponse> {
+    const response = await axios.get('http://127.0.0.1:5000/get_website_statistics');
+
+    return Promise.resolve(response.data);
+}
+
 export default function FrontPage() {
+
+    const [chars, setChars] = useState(0);
+    const [users, setUsers] = useState(0);
+    const [texts, setTexts] = useState(0);
+
+    useEffect(() => {
+        getWebsiteStatisticsFromApi().then((response) => {
+            setChars(response['chars_sum']);
+            setUsers(response['registered_users']);
+            setTexts(response['texts']);
+        }).catch((err) => {
+            alert("could not get random text from api: " + err);
+        });
+    }, []);
+
     return (
         <div>
             <div id="front-banner">
@@ -10,12 +40,12 @@ export default function FrontPage() {
                             <div className="text-white">
                                 <h2>See how fast you can type</h2>
                                 <p>Test yourself on how fast and how accurately you are able to type.</p>
-                                <a type="button" href="/sign_up" className="btn btn-dark">Sign Up</a>
-                                <a type="button" href="/test" className="btn btn-outline-light">Try it</a>
+                                <a type="button" href="/sign_up" className="btn btn-dark banner-btn" style={{marginRight: 15}}>Sign Up</a>
+                                <a type="button" href="/test" className="btn btn-outline-light banner-btn">Try it</a>
                             </div>
                         </div>
                         <div className="col-sm my-auto">
-                            <img src={banner} width={720} height={200} className="img-fluid" />
+                            <img src={banner} alt="banner" width={720} height={200} className="img-fluid" />
                         </div>
                     </div>
                 </div>
@@ -61,7 +91,7 @@ export default function FrontPage() {
                             Statistics
                         </h4>
                         <p>
-                            Registered users: /totalUsers/<br />Texts: /totalTexts/<br />Total chars: /totalChars/
+                            Registered users: {users}<br />Texts in database: {texts}<br />Total chars: {chars}
                         </p>
                     </div>
                 </div>

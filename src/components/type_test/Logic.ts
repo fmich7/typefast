@@ -1,5 +1,15 @@
-export function getRandomTextFromApi() {
-    return "jak nie ma fuchy to se gramy w fifke na mieście nie jeden wykonał kiwke";
+import axios from 'axios';
+
+type getRandomTextFromApiResponse = {
+    content: string,
+    author: string,
+    word_count: number,
+};
+
+export async function getRandomTextFromApi(): Promise<getRandomTextFromApiResponse> {
+    const response = await axios.get('http://127.0.0.1:5000/get_rand_text');
+
+    return Promise.resolve(response.data["texts"]);
 }
 
 export function getListOfWordsFromText(text: string) {
@@ -30,7 +40,7 @@ export function onLetterTyped(userWord: string, allWords: string[], index: numbe
         mistake = true;
 
     //po ukończeniu słowa i naciśnięciu spacji, przechodzi do następnego
-    if (userWord === allWords[index] + " " || userWord === allWords[index] && index === allWords.length - 1) {
+    if (userWord === allWords[index] + " " || (userWord === allWords[index] && index === allWords.length - 1)) {
         good_part += allWords[index] + " ";
         userWord = "";
         index++;
@@ -41,7 +51,6 @@ export function onLetterTyped(userWord: string, allWords: string[], index: numbe
     if (index < allWords.length) {
         for (var i = 0; i < allWords[index].length; i++) {
             const word_mark = allWords[index][i];
-            console.log(userWord.length)
             if (i >= userWord.length || userWord === "")
                 word_normal += word_mark;
             else if (userWord[i] === word_mark && word_bad === "")

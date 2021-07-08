@@ -1,9 +1,7 @@
-import React, {Component, KeyboardEvent} from 'react';
-import {getRandomTextFromApi, onLetterTyped} from './Logic'
+import React, {Component} from 'react';
+import {getRandomTextFromApi, getListOfWordsFromText, onLetterTyped} from './Logic'
 import {StopWatch, WordsPerMinute} from './Statistics'
-import Timer from './Timer'
-import Progress_bar from './ProgressBar'
-import {textChangeRangeIsUnchanged} from 'typescript';
+import ProgressBar from './ProgressBar'
 
 interface wordInParts {
     word_good: string;
@@ -12,6 +10,7 @@ interface wordInParts {
 }
 
 type InputState = {
+    author: string,
     good_part: string,
     allWords: string[],
     currentWordIndex: number,
@@ -26,12 +25,12 @@ type InputState = {
 
 export default class TypeTestInput extends Component<{}, InputState>{
 
-    constructor() {
-        super({});
-        let text = getRandomTextFromApi().split(" ");
+    constructor(props: {}) {
+        super(props);
         this.state = {
+            author: "",
             good_part: "",
-            allWords: text,
+            allWords: [],
             currentWordIndex: 0,
             userWord: "",
             finished: false,
@@ -39,13 +38,32 @@ export default class TypeTestInput extends Component<{}, InputState>{
             accuracy: 100,
             previousUserWord: "",
             charEntries: 0,
-            currentWordInParts: {word_good: "", word_bad: "", word_normal: text[0]}
+            currentWordInParts: {word_good: "", word_bad: "", word_normal: ""}
         };
         this.handleChange = this.handleChange.bind(this);
+        console.log("constructor done")
+    }
+
+    componentDidMount() {
+        getRandomTextFromApi().then((response) => {
+            const textSplit = getListOfWordsFromText(response['content']);
+            this.setState({
+                author: response['author'],
+                allWords: textSplit,
+                currentWordInParts: {
+                    word_bad: this.state.currentWordInParts.word_bad,
+                    word_good: this.state.currentWordInParts.word_good,
+                    word_normal: textSplit[0]
+                }
+            });
+        }).catch((err) => {
+            alert("could not get random text from api: " + err);
+        });
+
     }
 
     handleChange(event: any) {
-        if (this.state.currentWordIndex >= this.state.allWords.length)
+        if (this.state.currentWordIndex >= this.state.allWords.length || this.state.allWords.length === 0)
             return;
         //sprawdza czy jest nowy znak, czy jest usuwanie poprzednihc
         let newCharTyped = false;
@@ -59,7 +77,9 @@ export default class TypeTestInput extends Component<{}, InputState>{
 
         //liczy accuracy
         const mistakes = (response.mistake ? 1 : 0) + this.state.mistakes;
-        const accuracy = Number(Math.round((this.state.charEntries - mistakes) / this.state.charEntries * 100).toFixed(0));
+        let accuracy = 0;
+        if (newCharTyped)
+            accuracy = Number(Math.round((this.state.charEntries - mistakes) / this.state.charEntries * 100).toFixed(0));
 
         this.setState({
             userWord: response.userWord,
@@ -95,7 +115,7 @@ export default class TypeTestInput extends Component<{}, InputState>{
                     <div className="input-group input-group-lg pb-2">
                         <input onChange={this.handleChange} value={this.state.userWord} type="text" className="form-control" placeholder="Type text here..." aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" />
                     </div>
-                    <Progress_bar progression={this.state.currentWordIndex / this.state.allWords.length} />
+                    <ProgressBar progression={this.state.currentWordIndex / this.state.allWords.length} />
                 </div>
                 {/* 2nd part */}
                 <div className="test_statistics">
@@ -107,7 +127,7 @@ export default class TypeTestInput extends Component<{}, InputState>{
                     <div className="row">
                         <div className="col-4">Duration: <StopWatch autoStart={true} stop={this.state.finished} /></div>
                         <div className="col-4">Text words: {this.state.allWords.length} </div>
-                        <div className="col-4">Author: Kizo </div>
+                        <div className="col-4">Author: {this.state.author} </div>
                     </div>
                 </div>
             </div>

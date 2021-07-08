@@ -57,7 +57,10 @@ export class StopWatch extends Component<TimerProps, TimerState>{
 
     render() {
         return (
-            <span className="time">{this.state.minutes}:{this.state.seconds}</span>
+            <span className="time">
+                {this.state.minutes}:
+                {this.state.seconds < 10 && 0}{this.state.seconds}
+            </span>
         );
     }
 }
@@ -93,9 +96,11 @@ export class WordsPerMinute extends Component<WpmProps, WpmState>{
                 this.stop();
 
             let time = this.state.time + 1;
-            const rawWpm = (this.props.charEntries / 5) / (this.state.time / 60);
-            const beautyfiedWpm = Number(Math.round(rawWpm).toFixed(0));
-            this.setState({wpm: beautyfiedWpm, time: time});
+            if (time !== 0) {
+                const rawWpm = (this.props.charEntries / 5) / (time / 60);
+                const beautyfiedWpm = Number(Math.round(rawWpm).toFixed(0));
+                this.setState({wpm: beautyfiedWpm, time: time});
+            }
         }, 1000);
         return this.setState({
             timer: timer

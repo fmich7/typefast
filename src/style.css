@@ -108,3 +108,7 @@ body{
 .normal-part{
     color: var(--f_normal);
 }
+
+.banner-btn{
+    padding: 6px 12.5%;
+}
