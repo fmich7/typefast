@@ -40,7 +40,9 @@ body{
     background-size: cover;
     text-align: start;
 }
-
+.banner-img{
+    border: 5px solid black;
+}
 .test_statistics{
     margin-top: 15px;
     padding: 10px 0 10px 0;

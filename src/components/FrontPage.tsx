@@ -45,7 +45,7 @@ export default function FrontPage() {
                             </div>
                         </div>
                         <div className="col-sm my-auto">
-                            <img src={banner} alt="banner" width={720} height={200} className="img-fluid" />
+                            <img src={banner} alt="banner" width={720} height={200} className="img-fluid banner-img" />
                         </div>
                     </div>
                 </div>
